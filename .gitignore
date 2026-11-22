@@ -1,0 +1,95 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Python caches and build output
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Logs, temp files, and runtime state
+*.log
+logs/
+backups/
+*.tar.gz
+runtime/
+tmp_*.log
+*.pid
+*.tmp
+*.bak
+
+# Runtime data and local-only state
+data/
+data/**
+attachments/
+attachments/**
+templates/
+templates/**
+附件/
+附件/**
+student_profile.md
+代码缺陷清单.md
+
+# Database, SQLite sidecars, and exported data files
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.sqlite3-*
+*.csv
+*.json
+
+# Keep code/config JSON files required by app tooling.
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/tsconfig.json
+!frontend/tsconfig.*.json
+!**/package.json
+!**/package-lock.json
+!**/tsconfig.json
+!**/tsconfig.*.json
+!**/jsconfig.json
+!**/*.schema.json
+
+# Frontend dependencies and generated artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# Downloaded third-party binaries
+tools/cloudflared/cloudflared.exe
+*.exe
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Local credentials, personal agent settings, and release exports
+.aws/
+.ssh/
+.agents/
+.codex/
+*.pem
+*.key
+*.p12
+*.pfx
+/releases/

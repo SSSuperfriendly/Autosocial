@@ -1,0 +1,21 @@
+services:
+  autosocial:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      AUTOSOCIAL_REQUIRE_AUTH: "true"
+      AUTOSOCIAL_USERNAME: ${AUTOSOCIAL_USERNAME:-autosocial}
+      AUTOSOCIAL_PASSWORD: ${AUTOSOCIAL_PASSWORD:?Set AUTOSOCIAL_PASSWORD in .env to a random password of at least 12 characters}
+      DATABASE_PATH: /state/data/autosocial.db
+      ATTACHMENT_DIR: /state/data/attachments
+    ports:
+      - "127.0.0.1:${AUTOSOCIAL_PORT:-8000}:8000"
+    volumes:
+      - autosocial-data:/state
+    security_opt:
+      - no-new-privileges:true
+    init: true
+
+volumes:
+  autosocial-data:

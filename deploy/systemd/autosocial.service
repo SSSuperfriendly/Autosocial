@@ -1,0 +1,24 @@
+[Unit]
+Description=AutoSocial web service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=autosocial
+Group=autosocial
+WorkingDirectory=/opt/autosocial/app
+EnvironmentFile=/etc/autosocial/autosocial.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/env AUTOSOCIAL_REQUIRE_AUTH=true /opt/autosocial/venv/bin/python -m uvicorn server.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/var/lib/autosocial /opt/autosocial/app/frontend/dist
+
+[Install]
+WantedBy=multi-user.target

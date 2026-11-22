@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="title desc">
+  <title id="title">AutoSocial — 每一次联系，都有下一步</title>
+  <desc id="desc">从导师资料，到邮件准备、沟通记录和下次跟进。申请数据由自己保管，基础功能不需要 API Key。</desc>
+  <rect width="1200" height="350" rx="20" fill="#f2f7fb"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC','Microsoft YaHei',sans-serif">
+    <text x="48" y="54" fill="#38677b" font-size="14" font-weight="700" letter-spacing="3">YOUR PHD JOURNEY</text>
+    <text x="48" y="105" fill="#172d3b" font-size="34" font-weight="700">每一次联系，都有下一步。</text>
+    <text x="48" y="141" fill="#516a7b" font-size="17">个人自托管的导师联系工作台 · 从第一封邮件，到持续有准备的沟通</text>
+    <path d="M200 240 H1000" stroke="#b2c8d7" stroke-width="2"/>
+    <g fill="#fff" stroke="#d4e1ea">
+      <rect x="48" y="181" width="256" height="112" rx="12"/>
+      <rect x="330" y="181" width="256" height="112" rx="12"/>
+      <rect x="612" y="181" width="256" height="112" rx="12"/>
+      <rect x="894" y="181" width="258" height="112" rx="12"/>
+    </g>
+    <g font-size="22" font-weight="650" fill="#203d50">
+      <text x="70" y="221">建立导师池</text>
+      <text x="352" y="221">准备联系邮件</text>
+      <text x="634" y="221">记录每次沟通</text>
+      <text x="916" y="221">安排下一步</text>
+    </g>
+    <g font-size="15" fill="#526b7c">
+      <text x="70" y="255">资料 · 研究方向 · 联系状态</text>
+      <text x="352" y="255">真实背景 · 模板 · 可编辑草稿</text>
+      <text x="634" y="255">发信 · 回信 · 面谈 · 备忘</text>
+      <text x="916" y="255">跟进日期 · 具体行动 · 待办</text>
+    </g>
+    <text x="48" y="325" fill="#4c6979" font-size="14">无需 API Key 即可开始 · SQLite 本地存储 · Docker 部署 · MIT 开源</text>
+  </g>
+</svg>

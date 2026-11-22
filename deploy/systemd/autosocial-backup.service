@@ -1,0 +1,10 @@
+[Unit]
+Description=Back up AutoSocial SQLite data
+
+[Service]
+Type=oneshot
+User=autosocial
+Group=autosocial
+WorkingDirectory=/opt/autosocial/app
+EnvironmentFile=/etc/autosocial/autosocial.env
+ExecStart=/usr/local/bin/autosocial-backup

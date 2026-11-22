@@ -1,0 +1,72 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/test_local.py
+      - run: python -m compileall -q autosocial server
+      - run: python scripts/check_privacy.py
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t autosocial:ci .
+      - name: Verify protected startup, demo data and persistence
+        shell: bash
+        run: |
+          docker run -d --name autosocial-ci \
+            -e AUTOSOCIAL_PASSWORD=ci-only-password-123456 \
+            -p 127.0.0.1:8000:8000 \
+            -v autosocial-ci-state:/state autosocial:ci
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/health; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:8000/health
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/api/tracking)" = "401"
+          docker exec autosocial-ci python /app/scripts/seed_demo.py
+          curl -fsS -u autosocial:ci-only-password-123456 http://127.0.0.1:8000/api/tracking \
+            | python -c "import json,sys; assert len(json.load(sys.stdin)['professors']) == 5"
+          docker exec autosocial-ci python -m autosocial.backup
+          docker restart autosocial-ci
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/health; then break; fi
+            sleep 2
+          done
+          curl -fsS -u autosocial:ci-only-password-123456 http://127.0.0.1:8000/api/tracking \
+            | python -c "import json,sys; assert len(json.load(sys.stdin)['professors']) == 5"
+      - name: Container logs
+        if: failure()
+        run: docker logs autosocial-ci
+      - name: Remove CI container
+        if: always()
+        run: docker rm -f autosocial-ci || true
